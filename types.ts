@@ -33,5 +33,12 @@ export interface Restaurant {
 
 export enum ViewState {
   HOME = 'HOME',
+  CART = 'CART',
   RESTAURANT_DETAIL = 'RESTAURANT_DETAIL',
+}
+
+export interface CartItem {
+  menuItem: MenuItem;
+  quantity: number;
+  variant?: string;
 }
