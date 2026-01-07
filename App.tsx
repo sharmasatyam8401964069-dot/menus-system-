@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { RESTAURANTS } from './data';
-import { Restaurant, MenuItem, ViewState, CartItem } from './types';
-import { getChefRecommendation } from './services/gemini';
+import { RESTAURANTS } from './data.ts';
+import { Restaurant, MenuItem, ViewState, CartItem } from './types.ts';
+import { getChefRecommendation } from './services/gemini.ts';
 
 const MacroStat: React.FC<{ label: string, value: string, color: string }> = ({ label, value, color }) => (
   <div className="flex items-center gap-2">
@@ -140,7 +140,7 @@ const App = () => {
   const restaurant = RESTAURANTS[0];
   const categories = ['All', 'High Protein', 'Low Kcal', 'Gluten Free', 'Vegan'];
 
-  // Mock initial items in cart as shown in the image
+  // Mock initial items in cart
   useEffect(() => {
     if (cart.length === 0) {
       setCart([

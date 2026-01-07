@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { MenuItem } from "../types";
+import { MenuItem } from "../types.ts";
 
 // Safe initialization
 const getAIClient = () => {

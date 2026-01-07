@@ -18,20 +18,38 @@
       .custom-scrollbar::-webkit-scrollbar {
         display: none;
       }
-      .category-pill.active {
-        background-color: #1a3a2a;
-        border-color: #22c55e;
-        color: #22c55e;
-      }
-      .glass {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+      #error-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: #000;
+        color: #ff4444;
+        padding: 2rem;
+        z-index: 9999;
+        font-family: monospace;
+        overflow: auto;
       }
     </style>
 <script>
     // Polyfill for process.env to prevent white screen errors on static hosts
     window.process = window.process || { env: { API_KEY: "" } };
+
+    // Global Error Logger to catch deployment crashes
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+      const overlay = document.getElementById('error-overlay');
+      if (overlay) {
+        overlay.style.display = 'block';
+        overlay.innerHTML = `
+          <h1 style="color: white; margin-bottom: 1rem;">Application Error</h1>
+          <p><strong>Message:</strong> ${msg}</p>
+          <p><strong>File:</strong> ${url}</p>
+          <p><strong>Line:</strong> ${lineNo}:${columnNo}</p>
+          <pre style="margin-top: 1rem; color: #888;">${error ? error.stack : ''}</pre>
+          <button onclick="location.reload()" style="margin-top: 2rem; padding: 0.5rem 1rem; background: #333; color: white; border: none; border-radius: 4px;">Retry</button>
+        `;
+      }
+      return false;
+    };
 </script>
 <script type="importmap">
 {
@@ -45,8 +63,9 @@
 </script>
 </head>
 <body class="bg-[#0a0a0a] text-white">
+    <div id="error-overlay"></div>
     <div id="root"></div>
-    <!-- Entry point for the application -->
+    <!-- Entry point for the application - added .tsx extension for explicit resolution -->
     <script type="module" src="index.tsx"></script>
 </body>
 </html>
